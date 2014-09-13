@@ -6,24 +6,28 @@ import sys._
  * In Scala the way to deal with collections is to use higher order functions instead of a for-loop.
  *
  * An overview of some functional programming techniques can be found here in the O'reilly book:
- * http://programming-scala.labs.oreilly.com/ch08.html#FunctionalDataStructures 
+ * http://programming-scala.labs.oreilly.com/ch08.html#FunctionalDataStructures
  */
 object ListManipulationExercise01 {
 
   /**
    * Get the first element in the list. Hint: there is a built-in function for this you can use.
-   * 
+   *
    */
   def firstElementInList[T](l: List[T]): T = {
     //buildin
-    null.asInstanceOf[T]
+    l.head
   }
 
   /**
    * Get the sum of all the elements in the list, e.g. sumOfList(List(1,2,3)) = 6.
    */
   def sumOfList(l: List[Int]): Int = {
-    error("fix me")
+    if (l.isEmpty) {
+      0
+    } else {
+      l.head + sumOfList(l.tail)
+    }
   }
 
   /**
@@ -35,7 +39,7 @@ object ListManipulationExercise01 {
    *  - ... etc
    */
   def lastElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.last
   }
 
    /**
@@ -47,7 +51,7 @@ object ListManipulationExercise01 {
    *  - ... etc
    */
   def nthElementInList[T](n: Int, l: List[T]): T = {
-    error("fix me")
+    l(n)
   }
 
   /**
@@ -56,10 +60,10 @@ object ListManipulationExercise01 {
    *  - built in
    *  - via a pattern match
    *  - custom made
-   *  - ... etc 
+   *  - ... etc
    */
   def concatLists[T](l1: List[T], l2: List[T]): List[T] = {
-    error("fix me")
+    l1 ::: l2
   }
 
   /**
@@ -67,11 +71,11 @@ object ListManipulationExercise01 {
    * Hint: this can be achieved in multiple ways:
    * - built in using the sort method
    * - via a foldLeft method (a bit complex, but fun)
-   * - ... whichever way you like 
-   * 
+   * - ... whichever way you like
+   *
    */
   def sortList[T <% Ordered[T]](list: List[T]): List[T] = {
-    error("fix me")
+    list.sorted
   }
 
   /**
@@ -79,7 +83,13 @@ object ListManipulationExercise01 {
    * Again, easy to implement using built-in functionality, but also possible to implement in your own free-style way.
    */
   def elementExists[T](l: List[T], e: T): Boolean = {
-    error("fix me")
+    if (l.isEmpty) {
+      false
+    } else if (l.head == e) {
+      true
+    } else {
+      elementExists(l.tail, e)
+    }
   }
 
   /**
@@ -88,7 +98,7 @@ object ListManipulationExercise01 {
    * pattern match or some other method.
    */
   def oddElements(iList: List[Int]): List[Int] = {
-    error("fix me")
+    iList.filter(x => x % 2 == 1)
   }
 
   /**
@@ -96,10 +106,16 @@ object ListManipulationExercise01 {
    * This method should return a list of lists, containing all final segments of the argument list, longest first.
    * For example: tails(List(1,2,3,4)) = List(List(1,2,3,4), List(2,3,4), List(3,4), List(4), List())
    *
-   * Implement it whatever way suites you best. Hint: it can be done in a neat way using recursion. 
+   * Implement it whatever way suites you best. Hint: it can be done in a neat way using recursion.
    */
   def tails[T](l: List[T]): List[List[T]] = {
-    error("fix me")
+    if (l.isEmpty) {
+      // If l is an empty list, wrap it in another list and return it
+      List(l)
+    } else {
+      // Otherwise, wrap the head in a list and append the tails of the tail
+      List(l) ::: tails(l.tail)
+    }
   }
 }
 
