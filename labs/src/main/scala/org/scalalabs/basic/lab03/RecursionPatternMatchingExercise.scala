@@ -54,7 +54,11 @@ object RecursionPatternMatchingExercise {
    * List(1,1,2,3,1,1) -> List(1,1,1,1), List(2), List(3)
    */
   def groupEquals[T](in: List[T]): List[List[T]] = {
-    error("fix me")
+    in match {
+      case l if l.isEmpty => List.empty[List[T]]
+      case l => l.filter(x => x == l.head) :: groupEquals(l.filter(x => x !=
+        l.head))
+    }
   }
 
   /**
@@ -62,23 +66,34 @@ object RecursionPatternMatchingExercise {
    * List(1,1,2,3,1,1) -> List(1,2,3)
    */
   def compress[T](in: List[T]): List[T] = {
-    error("fix me")
+    in match {
+      case l if l.isEmpty => List.empty[T]
+      case l => l.filter(x => x == l.head).head :: compress(l.filter(x => x !=
+        l.head))
+    }
   }
-  
+
   /**
    * Define the amount of all equal members
    * List(1,1,2,3,1,1) -> List((4,1),(1,2),(1,3))
    */
   def amountEqualMembers[T](in: List[T]): List[(Int, T)] = {
-    error("fix me")
+    in match {
+      case l if l.isEmpty => List.empty[(Int, T)]
+      case l => (l.filter(x => x == l.head).length, l.head) :: amountEqualMembers(l.filter(x => x != l.head))
+    }
   }
-  
+
   /**
    * Zip multiple lists
-   * List(List(1,2,3), List('A, 'B, 'C), List('a, 'b, 'c)) -> List(List(1, 'A, 'a), List(2, 'B, 'b), List(3, 'C, 'c))
+   * List(List(1,2,3), List('A, 'B, 'C), List('a, 'b, 'c)) -> List(List(1, 'A,
+     * 'a), List(2, 'B, 'b), List(3, 'C, 'c))
    */
   def zipMultiple(in: List[List[_]]): List[List[_]] = {
-    error("fix me")
+    in match {
+      case l if l.head.isEmpty => List.empty[List[_]]
+      case l => l.map(x => x.head) :: zipMultiple(l.map(x => x.tail))
+    }
   }
 
   /**
@@ -86,7 +101,9 @@ object RecursionPatternMatchingExercise {
    * List(List(1), List('A, 'B, 'C), List('a, 'b)) -> List(List(1, 'A, 'a))
    */
   def zipMultipleWithDifferentSize(in: List[List[_]]): List[List[_]] = {
-    error("fix me")
+    in match {
+      case l if (l.map(x => x.isEmpty)).contains(true) => List.empty[List[_]]
+      case l => l.map(x => x.head) :: zipMultipleWithDifferentSize(l.map(x => x.tail))
+    }
   }
-
 }
