@@ -22,32 +22,47 @@ object PatternMatchingExercise {
    * For expected solution see unittest @PatternMatchingExerciseTest
    *************************************************************************/
 
-  def describeLanguage(s: String): String = {
-    error("fix me")
-  }
+  def describeLanguage(s: String): String =
+    s match {
+      case "Java" | "Smalltalk" => "OOP"
+      case "Clojure" | "Haskell" => "Functional"
+      case "Scala" => "Hybrid"
+      case "C" => "Procedural"
+      case "Oz" => "Unknown"
+      case _ => "wat"
+    }
 
   /**
    * Here's how matches should work. If `in` is:
-   * 
+   *
    *    - a `String`, the function result is "A string with length n"
    *       where `n` is the length of `in`
-   *       
+   *
    *    - a positive `Integer`, the function result is "A positive integer"
-   *    
+   *
    *    - an instance of class `Person`, the function result is "A person with name: n"
    *       where `n` is the name of the person
-   *       
+   *
    *    - a sequence with more than 10 elements, the function result is "Seq with more than 10 elements"
-   *    
+   *
    *    - a sequence with at least three elements, the function result is "first: v1, second: v2, rest: tail"
    *        where v1, v2, and tail are the corresponding values from the sequence
-   *        
+   *
    *    - null, the function result is "A null value"
-   *        
+   *
    *    - anything else, the function result is "Some Scala class"
    */
   def matchOnInputType(in: Any): String = {
-    error("fix me")
+    in match {
+      case s: String => "A string with length " +  s.length
+      case i: Int if i > 0 =>"A positive integer"
+      case p: Person => "A person with name: " + p.name
+      case sq: Seq[Any] if sq.length > 10 => "Seq with more than 10 elements"
+      case sq: Seq[Any] if sq.length >= 3 => "first: " + sq.head +
+           ", second: " + sq.tail.head+ ", rest: " + sq.tail.tail
+      case null => "A null value"
+      case _ => "Some Scala class"
+    }
   }
 
   /**
@@ -55,7 +70,10 @@ object PatternMatchingExercise {
    *    otherwise return `None`
    */
   def older(p: Person): Option[String] = {
-    error("fix me")
+    p match {
+      case p if (p.age) > 30 => Some(p.name)
+      case _ => None
+    }
   }
 }
 
