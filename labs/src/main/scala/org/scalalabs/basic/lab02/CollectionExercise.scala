@@ -33,8 +33,30 @@ object CollectionExercise01 {
    *
    */
   def googleCodeJamGooglerese(lines: String*): Seq[String] = {
-    error("fix me")
+    val input:String = "ejp mysljylc kd kxveddknmc re jsicpdrysi rbcpc ypc rtcsra dkh wyfrepkym veddknkmkrkcd de kr kd eoya kw aej tysr re ujdr lkgc jv"
+
+    val output:String = "our language is impossible to understand there are twenty six factorial possibilities so it is okay if you want to just give up"
+
+    val inputList:List[Char] = input.toList
+    val outputList:List[Char] = output.toList
+
+    val m = (inputList zip outputList).toMap
+    var s = Seq.empty[String]
+
+    for (arg <- lines) {
+      val chars = arg.toList
+      val outstr = new StringBuilder()
+
+      for (c <- chars) {
+        outstr += (m get c).get
+      }
+
+      s = s :+ outstr.toString()
+    }
+    return s
+
   }
+
 }
 /*========================================================== */
 
@@ -50,7 +72,18 @@ object CollectionExercise02 {
    * using a functional approach.
    */
   def groupAdultsPerAgeGroup(persons: Seq[Person]): Map[Int, Seq[Person]] = {
-    error("fix me")
+    val p = persons.filter(x => x.age >= 20)
+
+    if (p.isEmpty) {
+      return Map[Int, Seq[Person]]()
+    } 
+    else {
+      val min = (p.map(x => x.age).min) / 10 * 10
+      val part = p.partition(x => x.age < min + 10 )
+
+      val map = groupAdultsPerAgeGroup(part._2)
+      return map + (min -> part._1)
+    }
   }
 }
 
@@ -64,9 +97,13 @@ object CollectionExercise03 {
    * checkValuesIncrease(Seq(1,2,3)) == true
    * checkValuesIncrease(Seq(1,2,2)) == false
    */
-  def checkValuesIncrease[T <% Ordered[T]](seq: Seq[T]): Boolean =
-    error("fix me")
-
+  def checkValuesIncrease[T <% Ordered[T]](seq: Seq[T]): Boolean = {
+    if (seq.length < 2) {
+      return true
+    } else {
+      return (seq.head < seq.tail.head) && checkValuesIncrease(seq.tail)
+    }
+  }
 }
 /*========================================================== */
 
@@ -76,6 +113,13 @@ object CollectionExercise04 {
    * To keep it simple it's ok to use String.split to extract all words of a sentence.
    */
   def calcLengthLongestWord(lines: String*): Int = {
-    error("fix me")
+    var curMax = 0;
+    for (line <- lines) {
+      val split = line.split(" ")
+      for (s <- split) {
+        curMax = math.max(s.length, curMax)
+      }
+    }
+    return curMax;
   }
 }
