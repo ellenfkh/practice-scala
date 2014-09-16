@@ -12,8 +12,8 @@ package object lab03 {
    * -- the amount of people in the room (filled: Some("10"), empty: None)
    * -- the room is not available (Some("locked"))
    */
-  val sampleRooms = Map(1 -> Some("12"), 2 -> None, 3 -> Some("locked"), 4 -> Some("14"), 5 -> Some("8"), 6 -> Some("locked"))
-}
+  val sampleRooms = Map(1 -> Some("12"), 2 -> None, 3 -> Some("locked"), 4 ->
+    Some("14"), 5 -> Some("8"), 6 -> Some("locked")) }
 
 object OptionExercise01 {
 
@@ -25,9 +25,17 @@ object OptionExercise01 {
    * - does not exist: 					"not existing"
    */
   def roomState(rooms: Map[Int, Option[String]], room: Int): String = {
-    error("Fix me")
-  }
+    if (!rooms.contains(room)) {
+      return "not existing"
+    }
 
+    val r:Option[String] = rooms(room)
+    r match {
+      case None => "empty"
+      case Some(x) if x == "locked" => "not available"
+      case Some(x) => x
+    }
+  }
 }
 
 object OptionExercise02 {
@@ -37,6 +45,20 @@ object OptionExercise02 {
    * to convert a possible numeric String (e.g. Some("12")) to an integer
    */
   def totalPeopleInRooms(rooms: Map[Int, Option[String]]): Int = {
-    error("Fix me")
+    var sum:Int = 0;
+
+    rooms.foreach {
+      case (key, value) => sum += numOccupants(value)
+    }
+
+    return sum;
+  }
+
+  def numOccupants(room: Option[String]): Int = {
+    room match {
+      case None => 0
+      case Some(x) if x == "locked" => 0
+      case Some(x) => x.toInt
+    }
   }
 }
